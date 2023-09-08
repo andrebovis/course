@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.andrebovis.course.entities.User;
-import com.andrebovis.course.repositories.UserReposotory;
+import com.andrebovis.course.repositories.UserRepository;
 
 @Service
 public class UserService {
 	
 	@Autowired
-	private UserReposotory repository ;
+	private UserRepository repository ;
 	
 	public List<User> findAll(){
 		return repository.findAll()
