@@ -2,52 +2,54 @@ package com.andrebovis.course.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_product")
 public class Product implements Serializable {
-	
-	
-
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id;
-	private String name ;
-	private String  description ;
-	private Double price ;
+	private Long id;
+	private String name;
+	private String description;
+	private Double price;
+	private String imgUrl;
 
-	@Transient 
-	private Set<Category> categories = new HashSet<>();	
-	private String umgUrl;public Product () {
-		
+	@ManyToMany
+	@JoinTable (name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private Set<Category> categories = new HashSet<>();
+
+
+	
+	public Product() {
 	}
 
-	public Product(Long id, String name, String description, Double price, String umgUrl) {
+	public Product(Long id, String name, String description, Double price, String imgUrl) {
 		super();
-		Id = id;
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
-		this.umgUrl = umgUrl;
+		this.imgUrl = imgUrl;
 	}
 
 	public Long getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(Long id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getName() {
@@ -74,23 +76,27 @@ public class Product implements Serializable {
 		this.price = price;
 	}
 
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
 	public Set<Category> getCategories() {
 		return categories;
 	}
 
 	
-
-	public String getUmgUrl() {
-		return umgUrl;
-	}
-
-	public void setUmgUrl(String umgUrl) {
-		this.umgUrl = umgUrl;
-	}
-
+	
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(Id);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
@@ -102,8 +108,11 @@ public class Product implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		return Objects.equals(Id, other.Id);
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
-		
-	
- }
+}

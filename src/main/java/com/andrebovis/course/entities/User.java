@@ -37,7 +37,7 @@ private static final long serialVersionUID = 1L;
  
  
 public User(Long id, String name, String email, String phone, String password) {
-	super();
+	
 	this.id = id;
 	this.name = name;
 	this.email = email;
