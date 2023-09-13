@@ -38,11 +38,11 @@ public class OrderItem  implements  Serializable {
 	public void setOrder (Order order) {
 		id.setOrder(order);
 	}
-	
+	 
 	public Product getProduct() {
 		return id.getProduct();
 	}
-	public void setPRoduct (Product product) {
+	public void setProduct (Product product) {
 		id.setProduct(product);
 	}
 	public Integer getQuantity() {
@@ -57,13 +57,19 @@ public class OrderItem  implements  Serializable {
 		return price;
 	}
 
+		public Double getSubTotal() {
+			return price * quantity;
+		}
 	public void setPrice(Double price) {
 		this.price = price;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
