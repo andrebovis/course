@@ -5,9 +5,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 import com.andrebovis.course.entities.User;
 import com.andrebovis.course.repositories.UserRepository;
+import com.andrebovis.course.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -21,11 +23,10 @@ public class UserService {
 
 	public User findById(Long id) {
 	Optional<User> obj = repository.findById(id);
-	return obj.get();	
-
+	return obj.orElseThrow(()-> new  ResourceNotFoundException(id));
 	}
 	
-	public User  inster(User obj) {
+	public User  insert(User obj) {
 		return repository.save(obj); 
 	}
 	
